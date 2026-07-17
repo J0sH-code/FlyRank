@@ -3,10 +3,12 @@ import express from "express";
 const app = express()
 const port = 3000
 
+app.use(express.json())
+
 const tasks = [
-    {id: 123, title: "Note1", done:true},
-    {id: 234, title: "Note2", done:true},
-    {id: 345, title: "Note3", done:true}
+    {id: 1, title: "Note1", done:true},
+    {id: 2, title: "Note2", done:true},
+    {id: 3, title: "Note3", done:true}
 ]
 
 app.get("/", (req, res) => {
@@ -35,6 +37,28 @@ app.get("/tasks/:id", (req, res) => {
         })
     }
     res.status(200).send(requestedTask)
+})
+
+app.post("/tasks", (req, res) => {
+    const taskTitle = req.body.title;
+    let newId = tasks[tasks.length-1].id + 1
+
+    if (taskTitle == null) {
+        res.status(400).json({
+            error: `Title missing`
+        })
+    }
+
+    tasks.push({
+        id: newId,
+        title: taskTitle,
+        done: false
+    })
+
+    res.status(200).json({
+        created: true,
+        task: tasks.find(task => task.id == newId)
+    })
 })
 
 app.listen(port,() => {
