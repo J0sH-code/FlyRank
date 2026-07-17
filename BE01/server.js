@@ -5,13 +5,15 @@ const port = 3000
 
 app.get("/", (req, res) => {
     res.status(200).json({
-        status: "ok"
+        name: "Task API",
+        version: "1.0",
+        endpoints: ["/tasks"]
     })
 })
 
-app.get("/code", (req, res) => {
+app.get("/health", (req, res) => {
     res.status(200).json({
-        message: "Second endpoint from week 1 assignment"
+        status: "ok"
     })
 })
 
