@@ -20,7 +20,7 @@ Open the interactive documentation at:
 http://localhost:3000/docs/
 ```
 
-![Swagger UI preview](swagger-screenshot.svg)
+![Swagger UI preview](swagger-screenshot.png)
 
 ## Endpoints
 
