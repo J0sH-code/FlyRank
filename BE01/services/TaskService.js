@@ -1,3 +1,4 @@
+import { NotFoundError, ValidationError } from "../errors.js";
 import TaskRepo from "../repositories/TasksRepo.js";
 
 export default class TaskService {
@@ -10,7 +11,7 @@ export default class TaskService {
     getTask(id){
         const requestedTask = this.#taskRepo.findById(id)
         if (requestedTask == null) {
-            throw new Error(`Task ${id} not found`);
+            throw new NotFoundError(`Task ${id} not found`);
         }
         return requestedTask
 
@@ -18,9 +19,9 @@ export default class TaskService {
 
     createTask(title){
         if (taskTitle == null) {
-        throw new Error("Title Missing");
-        
+            throw new ValidationError("Title Missing");
         }
+
         let repoSize = this.getTasks().length
         let newId = this.getTasks()[repoSize-1].id + 1
 
@@ -36,12 +37,12 @@ export default class TaskService {
 
     updateTask(id, payload){
         if (payload == null || (payload.title == null && payload.done== null)) {
-            throw new Error("Invalid/missing request body");
+            throw new ValidationError("Invalid/missing request body");
         }
 
         let requestedTask = this.getTask(id)
         if (requestedTask == null) {
-            throw new Error(`Task ${id} not found`);
+            throw new NotFoundError(`Task ${id} not found`);
             
         }
 
@@ -52,7 +53,7 @@ export default class TaskService {
     deleteTask(id){
         let requestedTask = this.getTask(id)
         if (requestedTask == null) {
-            throw new Error(`Task ${id} not found`);
+            throw new NotFoundError(`Task ${id} not found`);
         }
 
         this.#taskRepo.deleteTask(requestedTask)
