@@ -1,4 +1,4 @@
-import TaskRepo from "../repositories/TasksRepo";
+import TaskRepo from "../repositories/TasksRepo.js";
 
 export default class TaskService {
     #taskRepo = new TaskRepo()
@@ -35,7 +35,7 @@ export default class TaskService {
     }
 
     updateTask(id, payload){
-        if (req.body == null || (req.body.title == null && req.body.done == null)) {
+        if (payload == null || (payload.title == null && payload.done== null)) {
             throw new Error("Invalid/missing request body");
         }
 
@@ -45,8 +45,8 @@ export default class TaskService {
             
         }
 
-        requestedTask.done = payload.done
-        requestedTask.title = payload.title
+        this.#taskRepo.updateTitle(id, payload.title)
+        this.#taskRepo.updateStatus(id, payload.status)
     }
 
     deleteTask(id){

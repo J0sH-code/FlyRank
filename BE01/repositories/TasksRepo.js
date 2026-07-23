@@ -10,7 +10,7 @@ export default class TaskRepo {
     ]
 
     getAllTasks(){
-        return #tasks
+        return this.#tasks
     }
 
     findById(id){
